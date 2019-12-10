@@ -1,126 +1,101 @@
 <template>
-    <el-container id="chess-board">
-        <el-row>
-            <el-col :span="3">
-                <div id="a1" class="board-grid"></div>
-                <div id="a2" class="board-grid"></div>
-                <div id="a3" class="board-grid"></div>
-                <div id="a4" class="board-grid"></div>
-                <div id="a5" class="board-grid"></div>
-                <div id="a6" class="board-grid"></div>
-                <div id="a7" class="board-grid"></div>
-                <div id="a8" class="board-grid"></div>
-            </el-col>
-        </el-row>
-        <el-row>
-            <el-col :span="3">
-                <div id="b1" class="board-grid"></div>
-                <div id="b2" class="board-grid"></div>
-                <div id="b3" class="board-grid"></div>
-                <div id="b4" class="board-grid"></div>
-                <div id="b5" class="board-grid"></div>
-                <div id="b6" class="board-grid"></div>
-                <div id="b7" class="board-grid"></div>
-                <div id="b8" class="board-grid"></div>
-            </el-col>
-        </el-row>
-        <el-row>
-            <el-col :span="3">
-                <div id="c1" class="board-grid"></div>
-                <div id="c2" class="board-grid"></div>
-                <div id="c3" class="board-grid"></div>
-                <div id="c4" class="board-grid"></div>
-                <div id="c5" class="board-grid"></div>
-                <div id="c6" class="board-grid"></div>
-                <div id="c7" class="board-grid"></div>
-                <div id="c8" class="board-grid"></div>
-            </el-col>
-        </el-row>
-        <el-row>
-            <el-col :span="3">
-                <div id="d1" class="board-grid"></div>
-                <div id="d2" class="board-grid"></div>
-                <div id="d3" class="board-grid"></div>
-                <div id="d4" class="board-grid"></div>
-                <div id="d5" class="board-grid"></div>
-                <div id="d6" class="board-grid"></div>
-                <div id="d7" class="board-grid"></div>
-                <div id="d8" class="board-grid"></div>
-            </el-col>
-        </el-row>
-        <el-row>
-            <el-col :span="3">
-                <div id="e1" class="board-grid"></div>
-                <div id="e2" class="board-grid"></div>
-                <div id="e3" class="board-grid"></div>
-                <div id="e4" class="board-grid"></div>
-                <div id="e5" class="board-grid"></div>
-                <div id="e6" class="board-grid"></div>
-                <div id="e7" class="board-grid"></div>
-                <div id="e8" class="board-grid"></div>
-            </el-col>
-        </el-row>
-        <el-row>
-            <el-col :span="3">
-                <div id="f1" class="board-grid"></div>
-                <div id="f2" class="board-grid"></div>
-                <div id="f3" class="board-grid"></div>
-                <div id="f4" class="board-grid"></div>
-                <div id="f5" class="board-grid"></div>
-                <div id="f6" class="board-grid"></div>
-                <div id="f7" class="board-grid"></div>
-                <div id="f8" class="board-grid"></div>
-            </el-col>
-        </el-row>
-        <el-row>
-            <el-col :span="3">
-                <div id="g1" class="board-grid"></div>
-                <div id="g2" class="board-grid"></div>
-                <div id="g3" class="board-grid"></div>
-                <div id="g4" class="board-grid"></div>
-                <div id="g5" class="board-grid"></div>
-                <div id="g6" class="board-grid"></div>
-                <div id="g7" class="board-grid"></div>
-                <div id="g8" class="board-grid"></div>
-            </el-col>
-        </el-row>
-        <el-row>
-            <el-col :span="3">
-                <div id="h1" class="board-grid"></div>
-                <div id="h2" class="board-grid"></div>
-                <div id="h3" class="board-grid"></div>
-                <div id="h4" class="board-grid"></div>
-                <div id="h5" class="board-grid"></div>
-                <div id="h6" class="board-grid"></div>
-                <div id="h7" class="board-grid"></div>
-                <div id="h8" class="board-grid"></div>
-            </el-col>
-        </el-row>
-    </el-container>
+  <el-container id="chess-board">
+    <el-row
+      :span="3"
+      v-for="(xCoordinate,i) in generateXCoordinates"
+      :key="i">
+      <el-col
+        :span="3"
+      >
+        <div
+          :id="xCoordinate + yCoordinate"
+          v-for="(yCoordinate, i) in generateYCoordinates"
+          :key="i"
+          class="board-grid"
+        >
+          <Piece v-if="pieceIsAt(xCoordinate, yCoordinate)"
+                 :pieceName="pieces[xCoordinate + yCoordinate]"
+                 :current-turn="turn"
+          />
+        </div>
+      </el-col>
+    </el-row>
+  </el-container>
 </template>
 
 <script>
-    export default {
-        name: 'ChessBoard',
+  import Piece from "./Piece";
+
+  export default {
+    name: 'ChessBoard',
+    components: {
+      Piece
+    },
+    data() {
+      return {
+        pieces: {
+          "a1": "bR", "b1": "bN", "c1": "bB", "d1": "bQ", "e1": "bK", "f1": "bB", "g1": "bN", "h1": "bR",
+          "a2": "bP", "b2": "bP", "c2": "bP", "d2": "bP", "e2": "bP", "f2": "bP", "g2": "bP", "h2": "bP",
+          "a7": "wP", "b7": "wP", "c7": "wP", "d7": "wP", "e7": "wP", "f7": "wP", "g7": "wP", "h7": "wP",
+          "a8": "wR", "b8": "wN", "c8": "wB", "d8": "wQ", "e8": "wK", "f8": "wB", "g8": "wN", "h8": "wR"
+        },
+        picked: ``,
+        turn: ``,
+      }
+    },
+    methods: {
+      pieceIsAt(x, y) {
+        return this.pieces.hasOwnProperty(x + y);
+      }
+    },
+    computed: {
+      generateXCoordinates() {
+        const coordinates = [];
+
+        for (let i = `a`.charCodeAt(0); i <= `h`.charCodeAt(0); i++) {
+          coordinates.push(String.fromCharCode(i));
+        }
+        return coordinates;
+      },
+      generateYCoordinates() {
+        const coordinates = [];
+
+        for (let i = 1; i <= 8; i++) {
+          coordinates.push(i);
+        }
+        return coordinates;
+      }
+    },
+    mounted() {
+      // 체스말 초기화
     }
+  }
 </script>
 
 <style scoped>
-    #chess-board {
-        width: 56vw;
-        height: 56vw;
-        background-image: url('../assets/wood2.jpg');
-        background-size: 100% 100%;
-    }
+  #chess-board {
+    width: 56vw;
+    height: 56vw;
+    background-image: url('../assets/wood2.jpg');
+    background-size: 100% 100%;
+  }
 
-    .board-grid {
-        height: 7vw;
-        width: 7vw;
-    }
+  .board-grid {
+    height: 7vw;
+    width: 7vw;
+  }
 
-    .board-grid:hover {
-        height: 7vw;
-        width: 7vw;
-        background-color: #5D4F27;
-    }
+  /*.board-grid:hover {*/
+  /*    height: 7vw;*/
+  /*    width: 7vw;*/
+  /*    background-color: #5D4F27;*/
+  /*}*/
+
+  #pieceName:hover {
+      cursor: grab;
+  }
+
+  #start-button {
+    height: 3vw;
+  }
 </style>
