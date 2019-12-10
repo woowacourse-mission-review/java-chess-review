@@ -17,7 +17,7 @@
 ```
 요청: 
 
-POST /api/initialize HTTP/1.1
+GET /api/initialized-board HTTP/1.1
 
 ```
     
@@ -26,10 +26,16 @@ POST /api/initialize HTTP/1.1
 200 OK
 
 {
-    "a1": "bR", "b1": "bN", "c1": "bB", "d1": "bQ", "e1": "bK", "f1": "bB", "g1": "bN", "h1": "bR",
-    "a2": "bP", "b2": "bP", "c2": "bP", "d2": "bP", "e2": "bP", "f2": "bP", "g2": "bP", "h2": "bP",
-    "a7": "wP", "b7": "wP", "c7": "wP", "d7": "wP", "e7": "wP", "f7": "wP", "g7": "wP", "h7": "wP",
-    "a8": "wR", "b8": "wN", "c8": "wB", "d8": "wQ", "e8": "wK", "f8": "wB", "g8": "wN", "h8": "wR"
+    "positionsOfPieces": {
+        "a1": "bR", "b1": "bN", "c1": "bB", "d1": "bQ", "e1": "bK", "f1": "bB", "g1": "bN", "h1": "bR",
+        "a2": "bP", "b2": "bP", "c2": "bP", "d2": "bP", "e2": "bP", "f2": "bP", "g2": "bP", "h2": "bP",
+        "a7": "wP", "b7": "wP", "c7": "wP", "d7": "wP", "e7": "wP", "f7": "wP", "g7": "wP", "h7": "wP",
+        "a8": "wR", "b8": "wN", "c8": "wB", "d8": "wQ", "e8": "wK", "f8": "wB", "g8": "wN", "h8": "wR"
+    },
+    "turn" : "white",
+    "scoreWhite" : 10,
+    "scoreBlack" : 15,
+    "gameStatus" : "battle"
 }
 ```
 
@@ -53,12 +59,15 @@ POST /api/move HTTP/1.1
 200 OK 
 
 {
-    "from" : "a1",
-    "to" : "a3",
-    "score white" : 10,
-    "score black" : 15,
-    "game status" : "battle" / "end",
-    "turn" : "white" / "black" 
+    "positionsOfPieces" : {
+    "a1": "bR", "b1": "bN", "c1": "bB", "d1": "bQ", "e1": "bK", "f1": "bB", "g1": "bN", "h1": "bR",
+    "a2": "bP", "b2": "bP", "c2": "bP", "d2": "bP", "e2": "bP", "f2": "bP", "g2": "bP", "h2": "bP",
+    "a7": "wP", "b7": "wP", "c7": "wP", "d7": "wP", "e7": "wP", "f7": "wP", "g7": "wP", "h7": "wP",
+    "a8": "wR", "b8": "wN", "c8": "wB", "d8": "wQ", "e8": "wK", "f8": "wB", "g8": "wN", "h8": "wR" }
+    "scoreWhite" : 10,
+    "scoreBlack" : 15,
+    "gameStatus" : "battle" or "end",
+    "turn" : "white" or "black" 
 }
 ```
 ```
@@ -118,7 +127,7 @@ GET /api/winner
 200 OK
 
 {
-    "winner" : "white" / "black" / "draw"
+    "winner" : "white" or "black" or "draw"
 }
 ```
 
