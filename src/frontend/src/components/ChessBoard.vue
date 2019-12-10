@@ -91,11 +91,4 @@
   /*    background-color: #5D4F27;*/
   /*}*/
 
-  #pieceName:hover {
-      cursor: grab;
-  }
-
-  #start-button {
-    height: 3vw;
-  }
 </style>
