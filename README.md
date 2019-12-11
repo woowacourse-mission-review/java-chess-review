@@ -33,8 +33,8 @@ GET /api/initialized-board HTTP/1.1
         "a8": "wR", "b8": "wN", "c8": "wB", "d8": "wQ", "e8": "wK", "f8": "wB", "g8": "wN", "h8": "wR"
     },
     "turn" : "white",
-    "scoreWhite" : 10,
-    "scoreBlack" : 15,
+    "scoreWhite" : "10",
+    "scoreBlack" : "15",
     "gameStatus" : "battle"
 }
 ```
@@ -64,8 +64,8 @@ POST /api/move HTTP/1.1
     "a2": "bP", "b2": "bP", "c2": "bP", "d2": "bP", "e2": "bP", "f2": "bP", "g2": "bP", "h2": "bP",
     "a7": "wP", "b7": "wP", "c7": "wP", "d7": "wP", "e7": "wP", "f7": "wP", "g7": "wP", "h7": "wP",
     "a8": "wR", "b8": "wN", "c8": "wB", "d8": "wQ", "e8": "wK", "f8": "wB", "g8": "wN", "h8": "wR" }
-    "scoreWhite" : 10,
-    "scoreBlack" : 15,
+    "scoreWhite" : "10",
+    "scoreBlack" : "15",
     "gameStatus" : "battle" or "end",
     "turn" : "white" or "black" 
 }
