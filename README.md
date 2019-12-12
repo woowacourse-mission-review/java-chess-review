@@ -48,8 +48,8 @@ GET /api/initialized-board HTTP/1.1
 POST /api/move HTTP/1.1
 
 {
-    "from" : "a1",
-    "to" : "a3"
+    from : "a1",
+    to : "a3"
 }
 ```
 
@@ -60,10 +60,10 @@ POST /api/move HTTP/1.1
 
 {
     "positionsOfPieces" : {
-    "a1": "bR", "b1": "bN", "c1": "bB", "d1": "bQ", "e1": "bK", "f1": "bB", "g1": "bN", "h1": "bR",
+    "a1": "bR", "b1": "bN", "c1": "bB", "d1": "bK", "e1": "bQ", "f1": "bB", "g1": "bN", "h1": "bR",
     "a2": "bP", "b2": "bP", "c2": "bP", "d2": "bP", "e2": "bP", "f2": "bP", "g2": "bP", "h2": "bP",
     "a7": "wP", "b7": "wP", "c7": "wP", "d7": "wP", "e7": "wP", "f7": "wP", "g7": "wP", "h7": "wP",
-    "a8": "wR", "b8": "wN", "c8": "wB", "d8": "wQ", "e8": "wK", "f8": "wB", "g8": "wN", "h8": "wR" }
+    "a8": "wR", "b8": "wN", "c8": "wB", "d8": "wK", "e8": "wQ", "f8": "wB", "g8": "wN", "h8": "wR" }
     "scoreWhite" : "10",
     "scoreBlack" : "15",
     "gameStatus" : "battle" or "end",
