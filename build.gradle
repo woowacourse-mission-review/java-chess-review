@@ -30,6 +30,7 @@ task buildFrontEnd(type: Exec) {
         commandLine 'npm', 'run', 'build'
     }
 }
+// todo : In real Server,  => npm task
 
 processResources.dependsOn 'buildFrontEnd'
 
