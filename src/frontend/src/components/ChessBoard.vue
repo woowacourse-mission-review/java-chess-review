@@ -11,7 +11,7 @@
           :id="xCoordinate + yCoordinate"
           v-for="(yCoordinate, i) in generateYCoordinates"
           :key="i"
-          @click="tryMoveToHere(xCoordinate + yCoordinate)"
+          @click="tryMoveTo(xCoordinate + yCoordinate)"
           class="board-grid"
           :style="changeColorIfMovable(xCoordinate + yCoordinate)"
         >
@@ -30,6 +30,7 @@
 <script>
   import Piece from "./Piece";
   import request from "request";
+  import {eventBus} from "../main";
 
   export default {
     name: 'ChessBoard',
@@ -53,13 +54,14 @@
         const chessboard = this;
 
         request(`${window.location.origin}/api/initialized-board`, function (error, response, body) {
-          const boardInfo = JSON.parse(body);
-          window.console.log(boardInfo);
+          const boardStatus = JSON.parse(body);
+          window.console.log(boardStatus);
 
           if (response.statusCode === 200) {
-            chessboard.pieces = boardInfo.positionsOfPieces;
-            chessboard.turn = boardInfo.turn;
+            chessboard.pieces = boardStatus.positionsOfPieces;
+            chessboard.turn = boardStatus.turn;
             chessboard.getMovablePositions(chessboard);
+            eventBus.$emit(`updateBoard`, boardStatus);
           } else {
             alert(`초기화 실패!`);
             alert(error);
@@ -87,7 +89,7 @@
         }
         return ``;
       },
-      tryMoveToHere(position) {
+      tryMoveTo(position) {
         if (this.pickedPosition === position) {
           return;
         }
@@ -112,8 +114,15 @@
         request.post(movingInfo, function (error, response, body) {
           if (response.statusCode === 200) {
             chessboard.pieces = body.positionsOfPieces;
+
+            if (body.gameStatus === `end`) {
+              chessboard.movablePositions = {};
+              eventBus.$emit(`gameOver`, body);
+              return;
+            }
             chessboard.turn = body.turn;
             chessboard.getMovablePositions(chessboard);
+            eventBus.$emit(`updateBoard`, body);
           }
           window.console.log(error);
           window.console.log(response);
@@ -140,8 +149,11 @@
       },
     },
     created() {
-      this.initializePieces();
+      eventBus.$on(`startGame`, this.initializePieces);
     },
+    destroyed() {
+      eventBus.$off(`startGame`);
+    }
   }
 </script>
 
