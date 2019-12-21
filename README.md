@@ -86,7 +86,7 @@ POST /api/move HTTP/1.1
 ```
 요청:
 
-GET /api/movablePositions/
+GET /api/movable-positions/
 ```
 
 ```

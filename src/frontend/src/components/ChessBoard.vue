@@ -11,11 +11,15 @@
           :id="xCoordinate + yCoordinate"
           v-for="(yCoordinate, i) in generateYCoordinates"
           :key="i"
+          @click="tryMoveToHere(xCoordinate + yCoordinate)"
           class="board-grid"
+          :style="changeColorIfMovable(xCoordinate + yCoordinate)"
         >
           <Piece v-if="pieceIsAt(xCoordinate, yCoordinate)"
                  :pieceName="pieces[xCoordinate + yCoordinate]"
                  :current-turn="turn"
+                 :position="xCoordinate + yCoordinate"
+                 @update:picked="pick($event)"
           />
         </div>
       </el-col>
@@ -36,7 +40,7 @@
       return {
         pieces: {},
         movablePositions: {},
-        picked: ``,
+        pickedPosition: ``,
         turn: ``,
         gameStatus: ``,
       }
@@ -55,12 +59,67 @@
           if (response.statusCode === 200) {
             chessboard.pieces = boardInfo.positionsOfPieces;
             chessboard.turn = boardInfo.turn;
+            chessboard.getMovablePositions(chessboard);
           } else {
-            //Todo : initialize 실패시 오류 alert
+            alert(`초기화 실패!`);
+            alert(error);
             window.console.log(error);
           }
         });
-      }
+      },
+      getMovablePositions(chessboard) {
+        request(`${window.location.origin}/api/movable-positions/`, function (error, response, body) {
+          if (response.statusCode === 200) {
+            window.console.log(body);
+            chessboard.movablePositions = JSON.parse(body);
+          }
+        });
+      },
+      pick(positionOfPiece) {
+        this.pickedPosition = positionOfPiece;
+      },
+      changeColorIfMovable(position) {
+        if (this.movablePositions.hasOwnProperty(this.pickedPosition)) {
+          if (this.pickedPosition != '' && this.movablePositions[this.pickedPosition].includes(position)) {
+            return `box-shadow: inset 0 2px 45px #1a3300;
+                    cursor: pointer;`
+          }
+        }
+        return ``;
+      },
+      tryMoveToHere(position) {
+        if (this.pickedPosition === position) {
+          return;
+        }
+
+        if (this.movablePositions[this.pickedPosition].includes(position)) {
+          this.move(this.pickedPosition, position)
+        }
+        this.pickedPosition = ``;
+      },
+      move(from, to) {
+        const chessboard = this;
+        const movingInfo = {
+          uri: `${window.location.origin}/api/move`,
+          method: `POST`,
+          body: {
+            from: from,
+            to: to,
+          },
+          json: true,
+        };
+
+        request.post(movingInfo, function (error, response, body) {
+          if (response.statusCode === 200) {
+            chessboard.pieces = body.positionsOfPieces;
+            chessboard.turn = body.turn;
+            chessboard.getMovablePositions(chessboard);
+          }
+          window.console.log(error);
+          window.console.log(response);
+          window.console.log(body);
+        });
+      },
     },
     computed: {
       generateXCoordinates() {
