@@ -7,5 +7,7 @@ import coursereview.springchess.domain.position.ChessPositions;
 public interface ChessPiece {
     ChessPositions findMovablePositions(final ChessPosition source, final ChessPlayer currentPlayer, final ChessPlayer oppositePlayer);
 
+    boolean canMoveSeveralPositions();
+
     String getSign();
 }

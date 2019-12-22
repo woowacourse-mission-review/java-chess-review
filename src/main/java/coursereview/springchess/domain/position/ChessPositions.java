@@ -10,6 +10,10 @@ public class ChessPositions {
         this.positions = positions;
     }
 
+    public void addAll(final List<ChessPosition> positions) {
+        this.positions.addAll(positions);
+    }
+
     public boolean contains(final ChessPosition chessPosition) {
         return positions.contains(chessPosition);
     }

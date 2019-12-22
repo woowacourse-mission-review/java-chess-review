@@ -18,6 +18,14 @@ public class ChessPlayer {
         this.pieces = pieces;
     }
 
+    public boolean contains(final ChessPosition chessPosition) {
+        return pieces.containsKey(chessPosition);
+    }
+
+    public boolean doesNotContain(final ChessPosition chessPosition) {
+        return !contains(chessPosition);
+    }
+
     public Map<ChessPosition, ChessPiece> getPieces() {
         return pieces;
     }
