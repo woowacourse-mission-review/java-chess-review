@@ -74,4 +74,8 @@ public class PieceInfo {
     public boolean matchType(final Type type) {
         return this.type.equals(type);
     }
+
+    public double getScore() {
+        return type.getScore();
+    }
 }
