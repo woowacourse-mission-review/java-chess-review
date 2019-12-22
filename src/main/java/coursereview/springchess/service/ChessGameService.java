@@ -14,9 +14,13 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
+
+import static coursereview.springchess.domain.common.Color.BLACK;
+import static coursereview.springchess.domain.common.Color.WHITE;
 
 @Service
 public class ChessGameService {
@@ -63,5 +67,45 @@ public class ChessGameService {
 
     private String convertToWebFormat(Position position) {
         return position.getColumn().getColumn() + position.getRow().getRow();
+    }
+
+    @Transactional
+    public GameInfoDto move(String from, String to) {
+        ChessGame chessGame = chessGameRepository.findById(currentGameId)
+                .orElseThrow(() -> new IllegalArgumentException("게임을 다시 시작해주세요."));
+
+        List<Piece> pieces = pieceRepository.findAllByGameId(currentGameId);
+
+        Board board = new Board(pieces);
+        Position fromPosition = Position.of(from);
+        Position toPosition = Position.of(to);
+
+        board.move(fromPosition, toPosition);
+
+        Piece fromPiece = pieces.stream()
+                .filter(piece -> piece.matchPosition(fromPosition))
+                .findAny()
+                .orElseThrow(() -> new IllegalArgumentException("이동하려는 말을 찾을 수 없습니다."));
+
+        Piece toPiece = pieces.stream()
+                .filter(piece -> piece.matchPosition(toPosition))
+                .findAny()
+                .orElse(null);
+
+        fromPiece.updatePosition(toPosition);
+        if (toPiece != null) {
+            pieceRepository.delete(toPiece);
+        }
+
+        double scoreBlack = board.calculateScore(BLACK);
+        double scoreWhite = board.calculateScore(WHITE);
+        boolean isEnded = board.isEnded();
+
+        chessGame.changeTurn(scoreWhite, scoreBlack, isEnded);
+
+        List<Piece> changedPieces = pieceRepository.findAllByGameId(currentGameId);
+
+        return new GameInfoDto(chessGame.getTurn(), chessGame.getScoreWhite(), chessGame.getScoreBlack(),
+                chessGame.getGameStatus(), changedPieces);
     }
 }
