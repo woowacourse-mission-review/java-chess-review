@@ -1,5 +1,7 @@
 package coursereview.springchess.domain.piece;
 
+import java.util.Arrays;
+
 public enum ColumnPosition {
 
     A("a"),
@@ -11,6 +13,8 @@ public enum ColumnPosition {
     G("g"),
     H("h");
 
+    public static final String COLUMN_BOUND_EXCEPTION = "더 이상 이동할 수 없습니다.";
+
     private final String column;
 
     ColumnPosition(final String column) {
@@ -19,5 +23,21 @@ public enum ColumnPosition {
 
     public String getColumn() {
         return column;
+    }
+
+    public ColumnPosition next(final int columnShiftUnit) {
+        return Arrays.stream(ColumnPosition.values())
+                .filter(rowPosition -> calculateAscii(rowPosition.column) == calculateAscii(this.column) + columnShiftUnit)
+                .findAny()
+                .orElseThrow(() -> new IllegalArgumentException(COLUMN_BOUND_EXCEPTION));
+    }
+
+    private static int calculateAscii(String column) {
+        return column.charAt(0);
+    }
+
+    public boolean hasNext(final int columnShiftUnit) {
+        int addedColumn = calculateAscii(column) + columnShiftUnit;
+        return (addedColumn >= calculateAscii(A.column)) && (addedColumn <= calculateAscii(H.column));
     }
 }
