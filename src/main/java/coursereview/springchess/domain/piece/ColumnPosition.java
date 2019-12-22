@@ -13,7 +13,8 @@ public enum ColumnPosition {
     G("g"),
     H("h");
 
-    public static final String COLUMN_BOUND_EXCEPTION = "더 이상 이동할 수 없습니다.";
+    public static final String COLUMN_BOUND_EXCEPTION_MESSAGE = "더 이상 이동할 수 없습니다.";
+    public static final String NOT_FOUND_COLUMN_EXCEPTION_MESSAGE = "해당 Column 을 찾을 수 없습니다.";
 
     private final String column;
 
@@ -25,11 +26,11 @@ public enum ColumnPosition {
         return column;
     }
 
-    public ColumnPosition next(final int columnShiftUnit) {
+    public static ColumnPosition of(String column) {
         return Arrays.stream(ColumnPosition.values())
-                .filter(rowPosition -> calculateAscii(rowPosition.column) == calculateAscii(this.column) + columnShiftUnit)
+                .filter(columnPosition -> columnPosition.column.equals(column))
                 .findAny()
-                .orElseThrow(() -> new IllegalArgumentException(COLUMN_BOUND_EXCEPTION));
+                .orElseThrow(() -> new IllegalArgumentException(NOT_FOUND_COLUMN_EXCEPTION_MESSAGE));
     }
 
     private static int calculateAscii(String column) {
@@ -41,10 +42,10 @@ public enum ColumnPosition {
         return (addedColumn >= calculateAscii(A.column)) && (addedColumn <= calculateAscii(H.column));
     }
 
-    public static ColumnPosition of(String column) {
+    public ColumnPosition next(final int columnShiftUnit) {
         return Arrays.stream(ColumnPosition.values())
-                .filter(columnPosition -> columnPosition.column.equals(column))
+                .filter(rowPosition -> calculateAscii(rowPosition.column) == calculateAscii(this.column) + columnShiftUnit)
                 .findAny()
-                .orElseThrow(() -> new IllegalArgumentException("해당 Column 을 찾을 수 없습니다."));
+                .orElseThrow(() -> new IllegalArgumentException(COLUMN_BOUND_EXCEPTION_MESSAGE));
     }
 }
