@@ -11,7 +11,7 @@ import java.util.Map;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-class RookTest {
+class BishopTest {
 
     private ChessPlayer currentPlayer;
     private ChessPlayer oppositePlayer;
@@ -19,10 +19,10 @@ class RookTest {
     @BeforeEach
     void setUp() {
         Map<ChessPosition, ChessPiece> currentPieces = new EnumMap<>(ChessPosition.class);
-        currentPieces.put(ChessPosition.C1, new Rook());
+        currentPieces.put(ChessPosition.A1, new Rook());
 
         Map<ChessPosition, ChessPiece> oppositePieces = new EnumMap<>(ChessPosition.class);
-        oppositePieces.put(ChessPosition.A3, new Rook());
+        oppositePieces.put(ChessPosition.C3, new Rook());
 
         currentPlayer = new ChessPlayer(currentPieces);
         oppositePlayer = new ChessPlayer(oppositePieces);
@@ -30,13 +30,13 @@ class RookTest {
 
     @Test
     void findMovablePositions() {
-        ChessPiece rook = new Rook();
+        ChessPiece bishop = new Bishop();
 
-        ChessPositions movablePositions = rook.findMovablePositions(ChessPosition.A1, currentPlayer, oppositePlayer);
+        ChessPositions movablePositions = bishop.findMovablePositions(ChessPosition.B2, currentPlayer, oppositePlayer);
 
         assertThat(movablePositions.size()).isEqualTo(3);
-        assertThat(movablePositions.contains(ChessPosition.A2)).isTrue();
         assertThat(movablePositions.contains(ChessPosition.A3)).isTrue();
-        assertThat(movablePositions.contains(ChessPosition.B1)).isTrue();
+        assertThat(movablePositions.contains(ChessPosition.C3)).isTrue();
+        assertThat(movablePositions.contains(ChessPosition.C1)).isTrue();
     }
 }

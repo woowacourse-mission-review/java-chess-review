@@ -9,10 +9,10 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class Rook extends AbstractChessPiece {
+public class Bishop extends AbstractChessPiece {
 
-    private static final List<Direction> DIRECTIONS = Arrays.asList(Direction.N, Direction.E, Direction.S, Direction.W);
-    private static final String SIGN = "R";
+    private static final List<Direction> DIRECTIONS = Arrays.asList(Direction.NE, Direction.SE, Direction.SW, Direction.NW);
+    private static final String SIGN = "B";
 
     @Override
     public ChessPositions findMovablePositions(final ChessPosition source, final ChessPlayer currentPlayer, final ChessPlayer oppositePlayer) {
