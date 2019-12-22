@@ -9,19 +9,21 @@ import static java.lang.Integer.MAX_VALUE;
 
 public enum Type {
 
-    PAWN("P", null),
-    KNIGHT("N", determineVectors(Direction.valueOfKnight(), 1)),
-    BISHOP("B", determineVectors(Direction.valueOfDiagonal(), MAX_VALUE)),
-    ROOK("R", determineVectors(Direction.valueOfOrthogonal(), MAX_VALUE)),
-    KING("K", determineVectors(getAllDirections(), 1)),
-    QUEEN("Q", determineVectors(getAllDirections(), MAX_VALUE));
+    PAWN("P", null, 1.0),
+    KNIGHT("N", determineVectors(Direction.valueOfKnight(), 1), 2.5),
+    BISHOP("B", determineVectors(Direction.valueOfDiagonal(), MAX_VALUE), 3.0),
+    ROOK("R", determineVectors(Direction.valueOfOrthogonal(), MAX_VALUE), 5.0),
+    KING("K", determineVectors(getAllDirections(), 1), 9.0),
+    QUEEN("Q", determineVectors(getAllDirections(), MAX_VALUE), 0.0);
 
     private final String sign;
     private final List<Vector> vectors;
+    private final double score;
 
-    Type(final String sign, final List<Vector> vectors) {
+    Type(final String sign, final List<Vector> vectors, final double score) {
         this.sign = sign;
         this.vectors = vectors;
+        this.score = score;
     }
 
     private static List<Vector> determineVectors(List<Direction> directions, int distance) {
@@ -42,5 +44,9 @@ public enum Type {
 
     public String getSign() {
         return sign;
+    }
+
+    public double getScore() {
+        return score;
     }
 }
