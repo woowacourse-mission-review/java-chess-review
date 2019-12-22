@@ -8,9 +8,9 @@ import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-class DefaultBoardInitializerTest {
+class DefaultPiecesInitializerTest {
 
-    private DefaultBoardInitializer defaultBoardInitializer = new DefaultBoardInitializer();
+    private DefaultPieceInitializer defaultBoardInitializer = new DefaultPieceInitializer();
 
     @DisplayName("초기화 테스트")
     @Test
