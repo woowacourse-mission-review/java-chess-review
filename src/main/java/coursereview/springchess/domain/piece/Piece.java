@@ -56,4 +56,9 @@ public class Piece {
     public Color getColor() {
         return pieceInfo.getColor();
     }
+
+    public Piece updatePosition(final Position toPosition) {
+        position = toPosition;
+        return this;
+    }
 }
