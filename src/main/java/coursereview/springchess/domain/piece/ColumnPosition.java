@@ -40,4 +40,11 @@ public enum ColumnPosition {
         int addedColumn = calculateAscii(column) + columnShiftUnit;
         return (addedColumn >= calculateAscii(A.column)) && (addedColumn <= calculateAscii(H.column));
     }
+
+    public static ColumnPosition of(String column) {
+        return Arrays.stream(ColumnPosition.values())
+                .filter(columnPosition -> columnPosition.column.equals(column))
+                .findAny()
+                .orElseThrow(() -> new IllegalArgumentException("해당 Column 을 찾을 수 없습니다."));
+    }
 }

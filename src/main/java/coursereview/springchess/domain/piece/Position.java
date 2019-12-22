@@ -21,6 +21,12 @@ public class Position {
     @Column(name = "columnPosition", nullable = false)
     private ColumnPosition column;
 
+    public static Position of(final String webPositionForm) {
+        ColumnPosition column = ColumnPosition.of(webPositionForm.substring(0, 1));
+        RowPosition row = RowPosition.of(webPositionForm.substring(1, 2));
+        return new Position(row, column);
+    }
+
     public boolean matchRow(final RowPosition rowPosition) {
         return row.equals(rowPosition);
     }

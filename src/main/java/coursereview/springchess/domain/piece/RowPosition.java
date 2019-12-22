@@ -36,4 +36,11 @@ public enum RowPosition {
         int addedRow = row + rowShiftUnit;
         return (addedRow >= ONE.row) && (addedRow <= EIGHT.row);
     }
+
+    public static RowPosition of(String row) {
+        return Arrays.stream(RowPosition.values())
+                .filter(rowPosition -> String.valueOf(rowPosition.row).equals(row))
+                .findAny()
+                .orElseThrow(() -> new IllegalArgumentException("해당 Row 를 찾을 수 없습니다."));
+    }
 }
