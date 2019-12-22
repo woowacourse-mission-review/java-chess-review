@@ -1,11 +1,17 @@
 package coursereview.springchess.domain.piece;
 
-import lombok.ToString;
+import lombok.*;
 
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
 
+import static lombok.AccessLevel.PRIVATE;
+
+@NoArgsConstructor(access = PRIVATE)
+@AllArgsConstructor
 @Embeddable
+@Getter
+@EqualsAndHashCode
 @ToString
 public class Position {
 
@@ -15,19 +21,19 @@ public class Position {
     @Column(name = "columnPosition", nullable = false)
     private ColumnPosition column;
 
-    private Position() {
+    public boolean matchRow(final RowPosition rowPosition) {
+        return row.equals(rowPosition);
     }
 
-    public Position(final RowPosition row, final ColumnPosition column) {
-        this.row = row;
-        this.column = column;
+    public Position next(final Direction direction) {
+        return new Position(row.next(direction.getRowShiftUnit()), column.next(direction.getColumnShiftUnit()));
     }
 
-    public RowPosition getRow() {
-        return row;
+    public boolean hasNext(Direction direction) {
+        return row.hasNext(direction.getRowShiftUnit()) && column.hasNext(direction.getColumnShiftUnit());
     }
 
-    public ColumnPosition getColumn() {
-        return column;
+    public boolean matchColumn(final Position candidate) {
+        return column.equals(candidate.column);
     }
 }
