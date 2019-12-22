@@ -37,6 +37,10 @@ public class Piece {
         this.position = position;
     }
 
+    public boolean matchPosition(Position position) {
+        return this.position.equals(position);
+    }
+
     public RowPosition getRow() {
         return position.getRow();
     }
