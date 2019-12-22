@@ -1,6 +1,7 @@
 package coursereview.springchess.service;
 
 import coursereview.springchess.controller.dto.GameInfoDto;
+import coursereview.springchess.controller.dto.WinnerDto;
 import coursereview.springchess.domain.ChessGameRepository;
 import coursereview.springchess.domain.PieceRepository;
 import coursereview.springchess.domain.board.Board;
@@ -21,6 +22,7 @@ import java.util.stream.Collectors;
 
 import static coursereview.springchess.domain.common.Color.BLACK;
 import static coursereview.springchess.domain.common.Color.WHITE;
+import static coursereview.springchess.domain.game.GameStatus.BATTLE;
 
 @Service
 public class ChessGameService {
@@ -107,5 +109,16 @@ public class ChessGameService {
 
         return new GameInfoDto(chessGame.getTurn(), chessGame.getScoreWhite(), chessGame.getScoreBlack(),
                 chessGame.getGameStatus(), changedPieces);
+    }
+
+    public WinnerDto getWinner() {
+        ChessGame chessGame = chessGameRepository.findById(currentGameId)
+                .orElseThrow(() -> new IllegalArgumentException("게임을 다시 시작해주세요."));
+
+        if (chessGame.matchGameStatus(BATTLE)) {
+            throw new IllegalArgumentException("게임이 종료되지 않았습니다.");
+        }
+
+        return new WinnerDto(chessGame.getTurn().equals(BLACK) ? WHITE : BLACK);
     }
 }

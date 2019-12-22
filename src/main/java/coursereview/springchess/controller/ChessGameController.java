@@ -33,4 +33,9 @@ public class ChessGameController {
     public ResponseEntity move(@RequestBody MoveRequestDto moveRequestDto) {
         return ResponseEntity.ok(chessGameService.move(moveRequestDto.getFrom(), moveRequestDto.getTo()));
     }
+
+    @GetMapping("/api/winner")
+    public ResponseEntity getWinner() {
+        return ResponseEntity.ok(chessGameService.getWinner());
+    }
 }

@@ -48,6 +48,10 @@ public class ChessGame {
         this.gameStatus = isEnded ? END : BATTLE;
     }
 
+    public boolean matchGameStatus(final GameStatus gameStatus) {
+        return this.gameStatus.equals(gameStatus);
+    }
+
     @PrePersist
     public void prePersist() {
         turn = (turn == null) ? WHITE : turn;
