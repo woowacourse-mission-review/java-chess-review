@@ -1,5 +1,9 @@
 package coursereview.springchess.domain.position;
 
+import coursereview.springchess.domain.exception.ChessPositionNotFoundException;
+
+import java.util.Arrays;
+
 public enum ChessPosition {
     A1("a1"), A2("a2"), A3("a3"), A4("a4"), A5("a5"), A6("a6"), A7("a7"), A8("a8"),
     B1("b1"), B2("b2"), B3("b3"), B4("b4"), B5("b5"), B6("b6"), B7("b7"), B8("b8"),
@@ -10,6 +14,9 @@ public enum ChessPosition {
     G1("g1"), G2("g2"), G3("g3"), G4("g4"), G5("g5"), G6("g6"), G7("g7"), G8("g8"),
     H1("h1"), H2("h2"), H3("h3"), H4("h4"), H5("h5"), H6("h6"), H7("h7"), H8("h8");
 
+    private static final int INDEX_OF_WIDTH_POSITION = 0;
+    private static final int INDEX_OF_HEIGHT_POSITION = 1;
+
     private final String position;
 
     ChessPosition(final String position) {
@@ -18,5 +25,24 @@ public enum ChessPosition {
 
     public String getPosition() {
         return position;
+    }
+
+    public ChessPosition moveAdjacentPositionBy(final Direction direction) {
+        final char nextX = moveToNext(INDEX_OF_WIDTH_POSITION, direction.getXDegree());
+        final char nextY = moveToNext(INDEX_OF_HEIGHT_POSITION, direction.getYDegree());
+
+        final String positionName = String.valueOf(nextX) + nextY;
+        return find(positionName);
+    }
+
+    private char moveToNext(final int indexOfPosition, final int degree) {
+        return (char) (position.charAt(indexOfPosition) + degree);
+    }
+
+    public static ChessPosition find(final String position) {
+        return Arrays.stream(values())
+                .filter(chessPosition -> chessPosition.position.equalsIgnoreCase(position))
+                .findFirst()
+                .orElseThrow(ChessPositionNotFoundException::new);
     }
 }

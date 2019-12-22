@@ -19,11 +19,19 @@ public enum Direction {
     WWN(-2, 1),
     WWS(-2, -1);
 
-    private final int x;
-    private final int y;
+    private final int xDegree;
+    private final int yDegree;
 
-    Direction(final int x, final int y) {
-        this.x = x;
-        this.y = y;
+    Direction(final int xDegree, final int yDegree) {
+        this.xDegree = xDegree;
+        this.yDegree = yDegree;
+    }
+
+    public int getXDegree() {
+        return xDegree;
+    }
+
+    public int getYDegree() {
+        return yDegree;
     }
 }
