@@ -20,4 +20,9 @@ public class ChessGameController {
     public ResponseEntity initializeBoard() {
         return ResponseEntity.ok(chessGameService.initialize());
     }
+
+    @GetMapping("/api/movable-positions/")
+    public ResponseEntity getMovablePositions() {
+        return ResponseEntity.ok(chessGameService.calculateMovablePositions());
+    }
 }
