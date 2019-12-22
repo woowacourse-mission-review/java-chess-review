@@ -1,6 +1,8 @@
 package coursereview.springchess.domain.player;
 
 import coursereview.springchess.domain.chesspiece.ChessPiece;
+import coursereview.springchess.domain.exception.CannotMovablePositionException;
+import coursereview.springchess.domain.exception.ChessPieceNotFoundOnSourceException;
 import coursereview.springchess.domain.position.ChessPosition;
 import coursereview.springchess.domain.position.ChessPositions;
 import coursereview.springchess.domain.position.MovablePositions;
@@ -35,6 +37,31 @@ public class ChessPlayer {
             positions.put(key, movablePositions);
         });
         return new MovablePositions(positions);
+    }
+
+    public void move(final ChessPosition source, final ChessPosition target, final ChessPlayer oppositePlayer) {
+        if (doesNotContain(source)) {
+            throw new ChessPieceNotFoundOnSourceException();
+        }
+
+        MovablePositions movablePositions = findMovablePositions(oppositePlayer);
+        if (movablePositions.doesNotHaveMovementAbout(source, target)) {
+            throw new CannotMovablePositionException();
+        }
+
+        moveChessPiece(source, target);
+        removeEnemy(target, oppositePlayer);
+    }
+
+    private void moveChessPiece(final ChessPosition source, final ChessPosition target) {
+        ChessPiece chessPiece = pieces.remove(source);
+        pieces.put(target, chessPiece);
+    }
+
+    private void removeEnemy(final ChessPosition target, final ChessPlayer oppositePlayer) {
+        if (oppositePlayer.contains(target)) {
+            oppositePlayer.pieces.remove(target);
+        }
     }
 
     public Map<ChessPosition, ChessPiece> getPieces() {

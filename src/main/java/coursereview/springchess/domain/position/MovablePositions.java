@@ -1,6 +1,7 @@
 package coursereview.springchess.domain.position;
 
 import java.util.Map;
+import java.util.Objects;
 
 public class MovablePositions {
 
@@ -19,5 +20,15 @@ public class MovablePositions {
 
     public Map<ChessPosition, ChessPositions> getPositions() {
         return positions;
+    }
+
+    public boolean hasMovementAbout(final ChessPosition source, final ChessPosition target) {
+        ChessPositions chessPositions = positions.get(source);
+
+        return Objects.nonNull(chessPositions) && chessPositions.contains(target);
+    }
+
+    public boolean doesNotHaveMovementAbout(final ChessPosition source, final ChessPosition target) {
+        return !hasMovementAbout(source, target);
     }
 }

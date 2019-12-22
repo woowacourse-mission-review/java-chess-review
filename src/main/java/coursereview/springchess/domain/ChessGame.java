@@ -1,6 +1,7 @@
 package coursereview.springchess.domain;
 
 import coursereview.springchess.domain.player.ChessPlayer;
+import coursereview.springchess.domain.position.ChessPosition;
 import coursereview.springchess.domain.position.MovablePositions;
 
 public class ChessGame {
@@ -15,6 +16,21 @@ public class ChessGame {
         this.isWhiteTurn = isWhiteTurn;
     }
 
+    public MovablePositions findMovablePositions() {
+        MovablePositions whiteMovablePositions = whitePlayer.findMovablePositions(blackPlayer);
+        MovablePositions blackMovablePositions = blackPlayer.findMovablePositions(whitePlayer);
+
+        return whiteMovablePositions.addAll(blackMovablePositions);
+    }
+
+    public void move(final ChessPosition source, final ChessPosition target) {
+        ChessPlayer currentPlayer = findCurrentTurnPlayer();
+        ChessPlayer oppositePlayer = findOppositeTurnPlayer();
+        currentPlayer.move(source, target, oppositePlayer);
+
+        toggleTurn();
+    }
+
     private ChessPlayer findCurrentTurnPlayer() {
         return isWhiteTurn ? whitePlayer : blackPlayer;
     }
@@ -23,11 +39,8 @@ public class ChessGame {
         return isWhiteTurn ? blackPlayer : whitePlayer;
     }
 
-    public MovablePositions findMovablePositions() {
-        MovablePositions whiteMovablePositions = whitePlayer.findMovablePositions(blackPlayer);
-        MovablePositions blackMovablePositions = blackPlayer.findMovablePositions(whitePlayer);
-
-        return whiteMovablePositions.addAll(blackMovablePositions);
+    private void toggleTurn() {
+        this.isWhiteTurn = !isWhiteTurn;
     }
 
     public ChessPlayer getWhitePlayer() {
