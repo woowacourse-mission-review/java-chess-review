@@ -4,7 +4,7 @@ import coursereview.springchess.domain.piece.Piece;
 
 import java.util.List;
 
-public interface BoardInitializer {
+public interface PieceInitializer {
 
     List<Piece> initialize(Long gameId);
 }

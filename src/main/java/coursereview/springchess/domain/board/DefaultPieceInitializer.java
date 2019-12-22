@@ -15,7 +15,7 @@ import static coursereview.springchess.domain.common.Color.WHITE;
 import static coursereview.springchess.domain.piece.RowPosition.*;
 import static coursereview.springchess.domain.piece.Type.*;
 
-public class DefaultBoardInitializer implements BoardInitializer {
+public class DefaultPieceInitializer implements PieceInitializer {
 
     private static final List<Position> EIGHT_ROW_POSITIONS = initializeRowPositions(EIGHT);
     private static final List<Position> SEVEN_ROW_POSITIONS = initializeRowPositions(SEVEN);
