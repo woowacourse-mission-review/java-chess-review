@@ -15,12 +15,12 @@ import java.util.stream.Collectors;
 public class GameInfoDto {
 
     private String turn;
-    private Integer scoreWhite;
-    private Integer scoreBlack;
+    private Double scoreWhite;
+    private Double scoreBlack;
     private String gameStatus;
     private Map<String, String> positionsOfPieces;
 
-    public GameInfoDto(final Color turn, final Integer scoreWhite, final Integer scoreBlack,
+    public GameInfoDto(final Color turn, final Double scoreWhite, final Double scoreBlack,
                        final GameStatus gameStatus, final List<Piece> pieces) {
         this.turn = turn.name().toLowerCase();
         this.scoreWhite = scoreWhite;
