@@ -8,8 +8,10 @@ import lombok.ToString;
 
 import javax.persistence.*;
 
+import static coursereview.springchess.domain.common.Color.BLACK;
 import static coursereview.springchess.domain.common.Color.WHITE;
 import static coursereview.springchess.domain.game.GameStatus.BATTLE;
+import static coursereview.springchess.domain.game.GameStatus.END;
 import static javax.persistence.GenerationType.IDENTITY;
 
 @NoArgsConstructor
@@ -18,7 +20,7 @@ import static javax.persistence.GenerationType.IDENTITY;
 @ToString
 public class ChessGame {
 
-    private static final Integer DEFAULT_SCORE = 38;
+    private static final Double DEFAULT_SCORE = 38.0;
 
     @GeneratedValue(strategy = IDENTITY)
     @Column(name = "id")
@@ -29,15 +31,22 @@ public class ChessGame {
     @Convert(converter = ColorToBooleanConverter.class)
     private Color turn;
 
-    @Column(name = "scoreWhite", nullable = false, columnDefinition = "integer default 38")
-    private Integer scoreWhite;
+    @Column(name = "scoreWhite", nullable = false, columnDefinition = "double default 38.0")
+    private Double scoreWhite;
 
-    @Column(name = "scoreBlack", nullable = false, columnDefinition = "integer default 38")
-    private Integer scoreBlack;
+    @Column(name = "scoreBlack", nullable = false, columnDefinition = "double default 38.0")
+    private Double scoreBlack;
 
     @Column(name = "gameStatus", nullable = false, columnDefinition = "boolean default true")
     @Convert(converter = GameStatusToBooleanConverter.class)
     private GameStatus gameStatus;
+
+    public void changeTurn(final double scoreWhite, final double scoreBlack, final boolean isEnded) {
+        turn = (turn.equals(BLACK)) ? WHITE : BLACK;
+        this.scoreWhite = scoreWhite;
+        this.scoreBlack = scoreBlack;
+        this.gameStatus = isEnded ? END : BATTLE;
+    }
 
     @PrePersist
     public void prePersist() {
