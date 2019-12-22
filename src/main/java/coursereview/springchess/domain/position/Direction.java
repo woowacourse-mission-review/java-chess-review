@@ -1,4 +1,4 @@
-package coursereview.springchess.domain;
+package coursereview.springchess.domain.position;
 
 public enum Direction {
     N(0, 1),
