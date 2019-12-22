@@ -2,6 +2,8 @@ package coursereview.springchess.domain.player;
 
 import coursereview.springchess.domain.chesspiece.ChessPiece;
 import coursereview.springchess.domain.position.ChessPosition;
+import coursereview.springchess.domain.position.ChessPositions;
+import coursereview.springchess.domain.position.MovablePositions;
 
 import java.util.EnumMap;
 import java.util.Map;
@@ -24,6 +26,15 @@ public class ChessPlayer {
 
     public boolean doesNotContain(final ChessPosition chessPosition) {
         return !contains(chessPosition);
+    }
+
+    public MovablePositions findMovablePositions(final ChessPlayer oppositePlayer) {
+        Map<ChessPosition, ChessPositions> positions = new EnumMap<>(ChessPosition.class);
+        pieces.forEach((key, value) -> {
+            ChessPositions movablePositions = value.findMovablePositions(key, this, oppositePlayer);
+            positions.put(key, movablePositions);
+        });
+        return new MovablePositions(positions);
     }
 
     public Map<ChessPosition, ChessPiece> getPieces() {

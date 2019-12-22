@@ -2,14 +2,17 @@ package coursereview.springchess.service;
 
 import coursereview.springchess.domain.ChessGame;
 import coursereview.springchess.domain.chesspiece.ChessPiece;
-import coursereview.springchess.domain.player.BlackPlayer;
 import coursereview.springchess.domain.player.ChessPlayer;
-import coursereview.springchess.domain.player.WhitePlayer;
 import coursereview.springchess.domain.position.ChessPosition;
+import coursereview.springchess.domain.position.ChessPositions;
+import coursereview.springchess.domain.position.MovablePositions;
 import coursereview.springchess.dto.ChessGameResponse;
+import coursereview.springchess.dto.ChessMovablePositionsResponse;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 public class ChessAssembler {
 
@@ -38,5 +41,17 @@ public class ChessAssembler {
 
             positionsOfPieces.put(key.getPosition(), signOfTeam + value.getSign());
         }
+    }
+
+    public static ChessMovablePositionsResponse toMovablePositionResponse(final MovablePositions movablePositions) {
+        Map<String, List<String>> response = new HashMap<>();
+
+        Map<ChessPosition, ChessPositions> positions = movablePositions.getPositions();
+        positions.forEach((key, value) -> response.put(key.getPosition()
+                , value.getPositions().stream()
+                        .map(ChessPosition::getPosition)
+                        .collect(Collectors.toList())
+        ));
+        return new ChessMovablePositionsResponse(response);
     }
 }
