@@ -17,9 +17,11 @@ public abstract class AbstractChessPiece implements ChessPiece {
 
         try {
             ChessPosition nextPosition = source.moveAdjacentPositionBy(direction);
-            while (canMoveSeveralPositions() && isEmptyPosition(nextPosition, chessGamePlayers)) {
+            boolean isPositionMovable = isEmptyPosition(nextPosition, chessGamePlayers);
+            while (isPositionMovable) {
                 positions.add(nextPosition);
                 nextPosition = nextPosition.moveAdjacentPositionBy(direction);
+                isPositionMovable = canMoveSeveralPositions() && isEmptyPosition(nextPosition, chessGamePlayers);
             }
 
             ChessPlayer oppositePlayer = chessGamePlayers.getOppositePlayer();
