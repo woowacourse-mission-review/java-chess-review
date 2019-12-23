@@ -3,6 +3,7 @@ package coursereview.springchess.domain.position;
 import coursereview.springchess.domain.exception.ChessPositionNotFoundException;
 
 import java.util.Arrays;
+import java.util.Optional;
 
 public enum ChessPosition {
     A1("a1"), A2("a2"), A3("a3"), A4("a4"), A5("a5"), A6("a6"), A7("a7"), A8("a8"),
@@ -29,12 +30,16 @@ public enum ChessPosition {
         return position;
     }
 
-    public ChessPosition moveAdjacentPositionBy(final Direction direction) {
-        final char nextX = moveToNext(INDEX_OF_WIDTH_POSITION, direction.getXDegree());
-        final char nextY = moveToNext(INDEX_OF_HEIGHT_POSITION, direction.getYDegree());
+    public Optional<ChessPosition> moveAdjacentPositionBy(final Direction direction) {
+        try {
+            final char nextX = moveToNext(INDEX_OF_WIDTH_POSITION, direction.getXDegree());
+            final char nextY = moveToNext(INDEX_OF_HEIGHT_POSITION, direction.getYDegree());
 
-        final String positionName = String.valueOf(nextX) + nextY;
-        return find(positionName);
+            final String positionName = String.valueOf(nextX) + nextY;
+            return Optional.ofNullable(find(positionName));
+        } catch (ChessPositionNotFoundException e) {
+            return Optional.empty();
+        }
     }
 
     private char moveToNext(final int indexOfPosition, final int degree) {

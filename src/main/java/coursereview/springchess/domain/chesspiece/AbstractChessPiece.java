@@ -27,11 +27,11 @@ public abstract class AbstractChessPiece implements ChessPiece {
         List<ChessPosition> positions = new ArrayList<>();
 
         try {
-            ChessPosition nextPosition = source.moveAdjacentPositionBy(direction);
+            ChessPosition nextPosition = moveAdjacentPositionBy(source, direction);
             boolean isPositionMovable = isEmptyPosition(nextPosition, chessGamePlayers);
             while (isPositionMovable) {
                 positions.add(nextPosition);
-                nextPosition = nextPosition.moveAdjacentPositionBy(direction);
+                nextPosition = moveAdjacentPositionBy(nextPosition, direction);
                 isPositionMovable = canMoveSeveralPositions() && isEmptyPosition(nextPosition, chessGamePlayers);
             }
 
@@ -44,6 +44,11 @@ public abstract class AbstractChessPiece implements ChessPiece {
         } catch (ChessPositionNotFoundException e) {
             return positions;
         }
+    }
+
+    private ChessPosition moveAdjacentPositionBy(final ChessPosition position, final Direction direction) {
+        return position.moveAdjacentPositionBy(direction)
+                .orElseThrow(ChessPositionNotFoundException::new);
     }
 
     protected boolean isEmptyPosition(final ChessPosition position, final ChessGamePlayers chessGamePlayers) {

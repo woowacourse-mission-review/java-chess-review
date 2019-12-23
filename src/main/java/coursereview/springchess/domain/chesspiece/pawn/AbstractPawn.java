@@ -9,6 +9,7 @@ import coursereview.springchess.domain.position.Direction;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 public abstract class AbstractPawn extends AbstractChessPiece {
 
@@ -18,18 +19,19 @@ public abstract class AbstractPawn extends AbstractChessPiece {
     public ChessPositions findMovablePositions(final ChessPosition source, final ChessGamePlayers chessGamePlayers) {
         List<ChessPosition> positions = new ArrayList<>();
 
-        ChessPosition nextPosition = source.moveAdjacentPositionBy(getVerticalDirection());
-        appendPosition(nextPosition, positions, chessGamePlayers);
+        Direction verticalDirection = getVerticalDirection();
+        Optional<ChessPosition> nextPosition = source.moveAdjacentPositionBy(verticalDirection);
+        nextPosition.ifPresent(position -> appendPosition(position, positions, chessGamePlayers));
 
         if (isPawnPosition(source)) {
-            nextPosition = nextPosition.moveAdjacentPositionBy(getVerticalDirection());
-            appendPosition(nextPosition, positions, chessGamePlayers);
+            nextPosition.flatMap(position -> position.moveAdjacentPositionBy(verticalDirection))
+                    .ifPresent(position -> appendPosition(position, positions, chessGamePlayers));
         }
 
         List<Direction> diagonalDirections = getDiagonalDirections();
         for (Direction diagonalDirection : diagonalDirections) {
-            ChessPosition diagonalNextPosition = source.moveAdjacentPositionBy(diagonalDirection);
-            appendDiagonalPosition(diagonalNextPosition, positions, chessGamePlayers);
+            source.moveAdjacentPositionBy(diagonalDirection)
+                    .ifPresent(position -> appendDiagonalPosition(position, positions, chessGamePlayers));
         }
 
         return new ChessPositions(positions);

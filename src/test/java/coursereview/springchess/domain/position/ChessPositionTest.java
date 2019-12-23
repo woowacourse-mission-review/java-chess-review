@@ -10,24 +10,24 @@ class ChessPositionTest {
 
     @Test
     void moveAdjacentPositionBy() {
-        assertThat(ChessPosition.D4.moveAdjacentPositionBy(Direction.N)).isEqualByComparingTo(ChessPosition.D5);
-        assertThat(ChessPosition.D4.moveAdjacentPositionBy(Direction.E)).isEqualByComparingTo(ChessPosition.E4);
-        assertThat(ChessPosition.D4.moveAdjacentPositionBy(Direction.S)).isEqualByComparingTo(ChessPosition.D3);
-        assertThat(ChessPosition.D4.moveAdjacentPositionBy(Direction.W)).isEqualByComparingTo(ChessPosition.C4);
+        assertThat(ChessPosition.D4.moveAdjacentPositionBy(Direction.N)).hasValue(ChessPosition.D5);
+        assertThat(ChessPosition.D4.moveAdjacentPositionBy(Direction.E)).hasValue(ChessPosition.E4);
+        assertThat(ChessPosition.D4.moveAdjacentPositionBy(Direction.S)).hasValue(ChessPosition.D3);
+        assertThat(ChessPosition.D4.moveAdjacentPositionBy(Direction.W)).hasValue(ChessPosition.C4);
 
-        assertThat(ChessPosition.D4.moveAdjacentPositionBy(Direction.NE)).isEqualByComparingTo(ChessPosition.E5);
-        assertThat(ChessPosition.D4.moveAdjacentPositionBy(Direction.SE)).isEqualByComparingTo(ChessPosition.E3);
-        assertThat(ChessPosition.D4.moveAdjacentPositionBy(Direction.SW)).isEqualByComparingTo(ChessPosition.C3);
-        assertThat(ChessPosition.D4.moveAdjacentPositionBy(Direction.NW)).isEqualByComparingTo(ChessPosition.C5);
+        assertThat(ChessPosition.D4.moveAdjacentPositionBy(Direction.NE)).hasValue(ChessPosition.E5);
+        assertThat(ChessPosition.D4.moveAdjacentPositionBy(Direction.SE)).hasValue(ChessPosition.E3);
+        assertThat(ChessPosition.D4.moveAdjacentPositionBy(Direction.SW)).hasValue(ChessPosition.C3);
+        assertThat(ChessPosition.D4.moveAdjacentPositionBy(Direction.NW)).hasValue(ChessPosition.C5);
 
-        assertThat(ChessPosition.D4.moveAdjacentPositionBy(Direction.NNE)).isEqualByComparingTo(ChessPosition.E6);
-        assertThat(ChessPosition.D4.moveAdjacentPositionBy(Direction.EEN)).isEqualByComparingTo(ChessPosition.F5);
-        assertThat(ChessPosition.D4.moveAdjacentPositionBy(Direction.EES)).isEqualByComparingTo(ChessPosition.F3);
-        assertThat(ChessPosition.D4.moveAdjacentPositionBy(Direction.SSE)).isEqualByComparingTo(ChessPosition.E2);
-        assertThat(ChessPosition.D4.moveAdjacentPositionBy(Direction.SSW)).isEqualByComparingTo(ChessPosition.C2);
-        assertThat(ChessPosition.D4.moveAdjacentPositionBy(Direction.WWS)).isEqualByComparingTo(ChessPosition.B3);
-        assertThat(ChessPosition.D4.moveAdjacentPositionBy(Direction.WWN)).isEqualByComparingTo(ChessPosition.B5);
-        assertThat(ChessPosition.D4.moveAdjacentPositionBy(Direction.NNW)).isEqualByComparingTo(ChessPosition.C6);
+        assertThat(ChessPosition.D4.moveAdjacentPositionBy(Direction.NNE)).hasValue(ChessPosition.E6);
+        assertThat(ChessPosition.D4.moveAdjacentPositionBy(Direction.EEN)).hasValue(ChessPosition.F5);
+        assertThat(ChessPosition.D4.moveAdjacentPositionBy(Direction.EES)).hasValue(ChessPosition.F3);
+        assertThat(ChessPosition.D4.moveAdjacentPositionBy(Direction.SSE)).hasValue(ChessPosition.E2);
+        assertThat(ChessPosition.D4.moveAdjacentPositionBy(Direction.SSW)).hasValue(ChessPosition.C2);
+        assertThat(ChessPosition.D4.moveAdjacentPositionBy(Direction.WWS)).hasValue(ChessPosition.B3);
+        assertThat(ChessPosition.D4.moveAdjacentPositionBy(Direction.WWN)).hasValue(ChessPosition.B5);
+        assertThat(ChessPosition.D4.moveAdjacentPositionBy(Direction.NNW)).hasValue(ChessPosition.C6);
     }
 
     @Test
