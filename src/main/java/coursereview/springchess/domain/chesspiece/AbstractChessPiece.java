@@ -1,6 +1,7 @@
 package coursereview.springchess.domain.chesspiece;
 
 import coursereview.springchess.domain.exception.ChessPositionNotFoundException;
+import coursereview.springchess.domain.player.ChessGamePlayers;
 import coursereview.springchess.domain.player.ChessPlayer;
 import coursereview.springchess.domain.position.ChessPosition;
 import coursereview.springchess.domain.position.Direction;
@@ -10,16 +11,18 @@ import java.util.List;
 
 public abstract class AbstractChessPiece implements ChessPiece {
 
-    protected List<ChessPosition> findMovablePositionsByDirection(ChessPosition source, final Direction direction
-            , final ChessPlayer currentPlayer, final ChessPlayer oppositePlayer) {
+    protected List<ChessPosition> findMovablePositionsByDirection(final ChessPosition source, final Direction direction
+            , final ChessGamePlayers chessGamePlayers) {
         List<ChessPosition> positions = new ArrayList<>();
+
         try {
             ChessPosition nextPosition = source.moveAdjacentPositionBy(direction);
-            while (canMoveSeveralPositions() && currentPlayer.doesNotContain(nextPosition) && oppositePlayer.doesNotContain(nextPosition)) {
+            while (canMoveSeveralPositions() && isEmptyPosition(nextPosition, chessGamePlayers)) {
                 positions.add(nextPosition);
                 nextPosition = nextPosition.moveAdjacentPositionBy(direction);
             }
 
+            ChessPlayer oppositePlayer = chessGamePlayers.getOppositePlayer();
             if (oppositePlayer.contains(nextPosition)) {
                 positions.add(nextPosition);
             }
@@ -28,5 +31,12 @@ public abstract class AbstractChessPiece implements ChessPiece {
         } catch (ChessPositionNotFoundException e) {
             return positions;
         }
+    }
+
+    protected boolean isEmptyPosition(final ChessPosition position, final ChessGamePlayers chessGamePlayers) {
+        ChessPlayer currentPlayer = chessGamePlayers.getCurrentPlayer();
+        ChessPlayer oppositePlayer = chessGamePlayers.getOppositePlayer();
+
+        return currentPlayer.doesNotContain(position) && oppositePlayer.doesNotContain(position);
     }
 }

@@ -1,6 +1,6 @@
 package coursereview.springchess.domain.chesspiece;
 
-import coursereview.springchess.domain.player.ChessPlayer;
+import coursereview.springchess.domain.player.ChessGamePlayers;
 import coursereview.springchess.domain.position.ChessPosition;
 import coursereview.springchess.domain.position.ChessPositions;
 import coursereview.springchess.domain.position.Direction;
@@ -15,10 +15,10 @@ public class Rook extends AbstractChessPiece {
     private static final String SIGN = "R";
 
     @Override
-    public ChessPositions findMovablePositions(final ChessPosition source, final ChessPlayer currentPlayer, final ChessPlayer oppositePlayer) {
+    public ChessPositions findMovablePositions(final ChessPosition source, ChessGamePlayers chessGamePlayers) {
         ChessPositions chessPositions = new ChessPositions(new ArrayList<>());
         DIRECTIONS.forEach(direction -> {
-            List<ChessPosition> positions = super.findMovablePositionsByDirection(source, direction, currentPlayer, oppositePlayer);
+            List<ChessPosition> positions = super.findMovablePositionsByDirection(source, direction, chessGamePlayers);
             chessPositions.addAll(positions);
         });
         return chessPositions;

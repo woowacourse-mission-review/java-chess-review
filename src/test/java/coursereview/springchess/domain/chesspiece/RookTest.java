@@ -1,5 +1,6 @@
 package coursereview.springchess.domain.chesspiece;
 
+import coursereview.springchess.domain.player.ChessGamePlayers;
 import coursereview.springchess.domain.player.ChessPlayer;
 import coursereview.springchess.domain.position.ChessPosition;
 import coursereview.springchess.domain.position.ChessPositions;
@@ -13,8 +14,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 class RookTest {
 
-    private ChessPlayer currentPlayer;
-    private ChessPlayer oppositePlayer;
+    private ChessGamePlayers chessGamePlayers;
 
     @BeforeEach
     void setUp() {
@@ -24,15 +24,17 @@ class RookTest {
         Map<ChessPosition, ChessPiece> oppositePieces = new EnumMap<>(ChessPosition.class);
         oppositePieces.put(ChessPosition.A3, new Rook());
 
-        currentPlayer = new ChessPlayer(currentPieces);
-        oppositePlayer = new ChessPlayer(oppositePieces);
+        ChessPlayer currentPlayer = new ChessPlayer(currentPieces);
+        ChessPlayer oppositePlayer = new ChessPlayer(oppositePieces);
+
+        chessGamePlayers = new ChessGamePlayers(currentPlayer, oppositePlayer);
     }
 
     @Test
     void findMovablePositions() {
         ChessPiece rook = new Rook();
 
-        ChessPositions movablePositions = rook.findMovablePositions(ChessPosition.A1, currentPlayer, oppositePlayer);
+        ChessPositions movablePositions = rook.findMovablePositions(ChessPosition.A1, chessGamePlayers);
 
         assertThat(movablePositions.size()).isEqualTo(3);
         assertThat(movablePositions.contains(ChessPosition.A2)).isTrue();

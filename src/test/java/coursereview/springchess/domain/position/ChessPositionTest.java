@@ -42,4 +42,16 @@ class ChessPositionTest {
 
         assertThat(exception.getMessage()).isEqualTo(ChessPositionNotFoundException.CHESS_POSITION_NOT_FOUND_MESSAGE);
     }
+
+    @Test
+    void isInitialWhitePawnPosition() {
+        assertThat(ChessPosition.A2.isInitialWhitePawnPosition()).isTrue();
+        assertThat(ChessPosition.A3.isInitialWhitePawnPosition()).isFalse();
+    }
+
+    @Test
+    void isInitialBlackPawnPosition() {
+        assertThat(ChessPosition.A7.isInitialBlackPawnPosition()).isTrue();
+        assertThat(ChessPosition.A6.isInitialBlackPawnPosition()).isFalse();
+    }
 }

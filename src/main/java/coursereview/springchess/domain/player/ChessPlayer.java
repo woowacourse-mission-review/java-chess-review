@@ -32,8 +32,10 @@ public class ChessPlayer {
 
     public MovablePositions findMovablePositions(final ChessPlayer oppositePlayer) {
         Map<ChessPosition, ChessPositions> positions = new EnumMap<>(ChessPosition.class);
+        ChessGamePlayers chessGamePlayers = new ChessGamePlayers(this, oppositePlayer);
+
         pieces.forEach((key, value) -> {
-            ChessPositions movablePositions = value.findMovablePositions(key, this, oppositePlayer);
+            ChessPositions movablePositions = value.findMovablePositions(key, chessGamePlayers);
             positions.put(key, movablePositions);
         });
         return new MovablePositions(positions);

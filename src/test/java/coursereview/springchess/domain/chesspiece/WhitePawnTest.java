@@ -12,14 +12,13 @@ import java.util.Map;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-class BishopTest {
+class WhitePawnTest {
 
     private ChessGamePlayers chessGamePlayers;
 
     @BeforeEach
     void setUp() {
         Map<ChessPosition, ChessPiece> currentPieces = new EnumMap<>(ChessPosition.class);
-        currentPieces.put(ChessPosition.A1, new Rook());
 
         Map<ChessPosition, ChessPiece> oppositePieces = new EnumMap<>(ChessPosition.class);
         oppositePieces.put(ChessPosition.C3, new Rook());
@@ -32,13 +31,18 @@ class BishopTest {
 
     @Test
     void findMovablePositions() {
-        ChessPiece bishop = new Bishop();
+        ChessPiece whitePawn = new WhitePawn();
 
-        ChessPositions movablePositions = bishop.findMovablePositions(ChessPosition.B2, chessGamePlayers);
+        ChessPositions movablePositions = whitePawn.findMovablePositions(ChessPosition.B2, chessGamePlayers);
 
         assertThat(movablePositions.size()).isEqualTo(3);
-        assertThat(movablePositions.contains(ChessPosition.A3)).isTrue();
+        assertThat(movablePositions.contains(ChessPosition.B3)).isTrue();
+        assertThat(movablePositions.contains(ChessPosition.B4)).isTrue();
         assertThat(movablePositions.contains(ChessPosition.C3)).isTrue();
-        assertThat(movablePositions.contains(ChessPosition.C1)).isTrue();
+
+        ChessPositions movablePositions2 = whitePawn.findMovablePositions(ChessPosition.B3, chessGamePlayers);
+
+        assertThat(movablePositions2.size()).isEqualTo(1);
+        assertThat(movablePositions2.contains(ChessPosition.B4)).isTrue();
     }
 }

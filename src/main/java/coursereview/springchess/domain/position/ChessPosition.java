@@ -16,6 +16,8 @@ public enum ChessPosition {
 
     private static final int INDEX_OF_WIDTH_POSITION = 0;
     private static final int INDEX_OF_HEIGHT_POSITION = 1;
+    private static final String LINE_OF_WHITE_PAWN = "2";
+    private static final String LINE_OF_BLACK_PAWN = "7";
 
     private final String position;
 
@@ -44,5 +46,13 @@ public enum ChessPosition {
                 .filter(chessPosition -> chessPosition.position.equalsIgnoreCase(position))
                 .findFirst()
                 .orElseThrow(ChessPositionNotFoundException::new);
+    }
+
+    public boolean isInitialWhitePawnPosition() {
+        return LINE_OF_WHITE_PAWN.equals(String.valueOf(position.charAt(INDEX_OF_HEIGHT_POSITION)));
+    }
+
+    public boolean isInitialBlackPawnPosition() {
+        return LINE_OF_BLACK_PAWN.equals(String.valueOf(position.charAt(INDEX_OF_HEIGHT_POSITION)));
     }
 }
