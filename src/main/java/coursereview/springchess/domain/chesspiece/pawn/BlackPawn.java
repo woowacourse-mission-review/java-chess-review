@@ -22,4 +22,9 @@ public class BlackPawn extends AbstractPawn {
     protected boolean isPawnPosition(final ChessPosition chessPosition) {
         return chessPosition.isInitialBlackPawnPosition();
     }
+
+    @Override
+    protected List<Direction> getDirections() {
+        return Arrays.asList(Direction.S, Direction.SW, Direction.SE);
+    }
 }

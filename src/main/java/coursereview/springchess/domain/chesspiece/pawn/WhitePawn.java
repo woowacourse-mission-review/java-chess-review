@@ -22,4 +22,9 @@ public class WhitePawn extends AbstractPawn {
     protected boolean isPawnPosition(final ChessPosition chessPosition) {
         return chessPosition.isInitialWhitePawnPosition();
     }
+
+    @Override
+    protected List<Direction> getDirections() {
+        return Arrays.asList(Direction.N, Direction.NW, Direction.NE);
+    }
 }
