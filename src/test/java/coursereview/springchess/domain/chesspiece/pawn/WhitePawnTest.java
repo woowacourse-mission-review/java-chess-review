@@ -1,5 +1,7 @@
-package coursereview.springchess.domain.chesspiece;
+package coursereview.springchess.domain.chesspiece.pawn;
 
+import coursereview.springchess.domain.chesspiece.ChessPiece;
+import coursereview.springchess.domain.chesspiece.Rook;
 import coursereview.springchess.domain.player.ChessGamePlayers;
 import coursereview.springchess.domain.player.ChessPlayer;
 import coursereview.springchess.domain.position.ChessPosition;
