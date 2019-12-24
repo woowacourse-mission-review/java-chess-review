@@ -111,4 +111,9 @@ public class ChessPlayer {
                 .reduce(Integer::sum)
                 .orElse(0);
     }
+
+    public boolean isKingAlive() {
+        return pieces.values().stream()
+                .anyMatch(ChessPiece::isKing);
+    }
 }

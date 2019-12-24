@@ -1,5 +1,6 @@
 package coursereview.springchess.domain;
 
+import coursereview.springchess.domain.exception.AlreadyChessGameIsOverException;
 import coursereview.springchess.domain.player.ChessPlayer;
 import coursereview.springchess.domain.position.ChessPosition;
 import coursereview.springchess.domain.position.MovablePositions;
@@ -24,11 +25,23 @@ public class ChessGame {
     }
 
     public void move(final ChessPosition source, final ChessPosition target) {
+        if (isGameOver()) {
+            throw new AlreadyChessGameIsOverException();
+        }
+
         ChessPlayer currentPlayer = findCurrentTurnPlayer();
         ChessPlayer oppositePlayer = findOppositeTurnPlayer();
         currentPlayer.move(source, target, oppositePlayer);
 
         toggleTurn();
+    }
+
+    private boolean isGameOver() {
+        return !isGameGoingOn();
+    }
+
+    public boolean isGameGoingOn() {
+        return whitePlayer.isKingAlive() && blackPlayer.isKingAlive();
     }
 
     public double getScoreOfWhitePlayer() {

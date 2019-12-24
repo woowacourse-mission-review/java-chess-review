@@ -18,6 +18,11 @@ public class King extends AbstractChessPiece {
     }
 
     @Override
+    public boolean isKing() {
+        return true;
+    }
+
+    @Override
     public String getSign() {
         return SIGN;
     }

@@ -34,7 +34,9 @@ public class ChessAssembler {
         double scoreWhite = chessGame.getScoreOfWhitePlayer();
         double scoreBlack = chessGame.getScoreOfBlackPlayer();
 
-        return new ChessGameResponse(positionsOfPieces, turn, scoreWhite, scoreBlack, "battle");
+        String gameStatus = chessGame.isGameGoingOn() ? "battle" : "end";
+
+        return new ChessGameResponse(positionsOfPieces, turn, scoreWhite, scoreBlack, gameStatus);
     }
 
     private static void registerPositions(final Map<String, String> positionsOfPieces, final Map<ChessPosition, ChessPiece> whitePieces, final String signOfTeam) {

@@ -29,6 +29,7 @@ class ChessPlayerTest {
         currentPieces.put(ChessPosition.B8, new Queen());
         currentPieces.put(ChessPosition.C8, new Bishop());
         currentPieces.put(ChessPosition.D8, new Knight());
+        currentPieces.put(ChessPosition.E8, new King());
 
         oppositePieces = new EnumMap<>(ChessPosition.class);
         oppositePieces.put(ChessPosition.D6, new Rook());
@@ -90,5 +91,14 @@ class ChessPlayerTest {
         ChessPlayer currentPlayer = new ChessPlayer(currentPieces);
 
         assertThat(currentPlayer.calculateScore()).isCloseTo(20.5, offset(0.0));
+    }
+
+    @Test
+    void isKingAlive() {
+        ChessPlayer currentPlayer = new ChessPlayer(currentPieces);
+        ChessPlayer oppositePlayer = new ChessPlayer(oppositePieces);
+
+        assertThat(currentPlayer.isKingAlive()).isTrue();
+        assertThat(oppositePlayer.isKingAlive()).isFalse();
     }
 }

@@ -11,6 +11,8 @@ public interface ChessPiece {
 
     boolean isPawn();
 
+    boolean isKing();
+
     String getSign();
 
     double getScore();
