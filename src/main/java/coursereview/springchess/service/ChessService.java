@@ -8,6 +8,7 @@ import coursereview.springchess.domain.position.MovablePositions;
 import coursereview.springchess.dto.ChessGameResponse;
 import coursereview.springchess.dto.ChessMovablePositionsResponse;
 import coursereview.springchess.dto.ChessMovementRequest;
+import coursereview.springchess.dto.WinnerResponse;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -35,5 +36,9 @@ public class ChessService {
 
         chessGame.move(source, target);
         return ChessAssembler.toGameResponse(chessGame);
+    }
+
+    public WinnerResponse findWinner() {
+        return ChessAssembler.toWinnerResponse(chessGame);
     }
 }

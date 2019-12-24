@@ -8,6 +8,7 @@ import coursereview.springchess.domain.position.ChessPositions;
 import coursereview.springchess.domain.position.MovablePositions;
 import coursereview.springchess.dto.ChessGameResponse;
 import coursereview.springchess.dto.ChessMovablePositionsResponse;
+import coursereview.springchess.dto.WinnerResponse;
 
 import java.util.HashMap;
 import java.util.List;
@@ -58,5 +59,20 @@ public class ChessAssembler {
                         .collect(Collectors.toList())
         ));
         return new ChessMovablePositionsResponse(response);
+    }
+
+    public static WinnerResponse toWinnerResponse(final ChessGame chessGame) {
+        String winnerStatus = findWinner(chessGame);
+        return new WinnerResponse(winnerStatus);
+    }
+
+    private static String findWinner(final ChessGame chessGame) {
+        if (chessGame.isWhitePlayerWinner()) {
+            return "white";
+        }
+        if (chessGame.isBlackPlayerWinner()) {
+            return "black";
+        }
+        return "draw";
     }
 }

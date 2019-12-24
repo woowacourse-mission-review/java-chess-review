@@ -36,12 +36,26 @@ public class ChessGame {
         toggleTurn();
     }
 
-    private boolean isGameOver() {
+    public boolean isGameOver() {
         return !isGameGoingOn();
     }
 
     public boolean isGameGoingOn() {
         return whitePlayer.isKingAlive() && blackPlayer.isKingAlive();
+    }
+
+    public boolean isWhitePlayerWinner() {
+        return (isGameOver() && whitePlayer.isKingAlive())
+                || (isGameGoingOn() && whitePlayer.calculateScore() > blackPlayer.calculateScore());
+    }
+
+    public boolean isBlackPlayerWinner() {
+        return (isGameOver() && blackPlayer.isKingAlive())
+                || (isGameGoingOn() && blackPlayer.calculateScore() > whitePlayer.calculateScore());
+    }
+
+    public boolean isGameDraw() {
+        return isGameGoingOn() && whitePlayer.calculateScore() == blackPlayer.calculateScore();
     }
 
     public double getScoreOfWhitePlayer() {

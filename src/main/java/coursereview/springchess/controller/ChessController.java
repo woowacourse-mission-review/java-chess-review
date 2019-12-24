@@ -3,6 +3,7 @@ package coursereview.springchess.controller;
 import coursereview.springchess.dto.ChessGameResponse;
 import coursereview.springchess.dto.ChessMovablePositionsResponse;
 import coursereview.springchess.dto.ChessMovementRequest;
+import coursereview.springchess.dto.WinnerResponse;
 import coursereview.springchess.service.ChessService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -39,5 +40,11 @@ public class ChessController {
     public ResponseEntity<ChessGameResponse> move(@RequestBody ChessMovementRequest chessMovementRequest) {
         ChessGameResponse chessGameResponse = chessService.move(chessMovementRequest);
         return new ResponseEntity<>(chessGameResponse, HttpStatus.OK);
+    }
+
+    @GetMapping("/api/winner")
+    public ResponseEntity<WinnerResponse> fetchWinner() {
+        WinnerResponse winnerResponse = chessService.findWinner();
+        return new ResponseEntity<>(winnerResponse, HttpStatus.OK);
     }
 }
