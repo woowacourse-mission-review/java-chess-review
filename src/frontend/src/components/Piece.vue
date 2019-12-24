@@ -4,6 +4,7 @@
        :style="grabCursorIfMovable"
        :src="require(`../assets/merida/${pieceName}.svg`)"
        alt=""
+       @click="emitPosition(position)"
   >
 </template>
 
@@ -12,7 +13,8 @@
     name: "Piece",
     props: {
       pieceName: String,
-      currentTurn: String
+      currentTurn: String,
+      position: String
     },
     data() {
       return {
@@ -30,6 +32,15 @@
       checkMovable(currentTurn) {
         return currentTurn === this.color;
       },
+      emitPosition(position) {
+        if (this.currentTurn === this.color) {
+          this.$emit(`update:picked`, position);
+        }
+      },
+      initializePiece() {
+        this.color = this.getColorOf(this.pieceName);
+        this.movable = this.checkMovable(this.currentTurn);
+      },
     },
     computed: {
       grabCursorIfMovable() {
@@ -39,9 +50,16 @@
         return ``;
       },
     },
+    watch: {
+      currentTurn: function () {
+        this.movable = this.checkMovable(this.currentTurn)
+      }
+    },
     created() {
-      this.color = this.getColorOf(this.pieceName);
-      this.movable = this.checkMovable(this.currentTurn);
+      this.initializePiece();
+    },
+    updated() {
+      this.initializePiece();
     },
   }
 </script>
