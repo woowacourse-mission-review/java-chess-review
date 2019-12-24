@@ -37,6 +37,10 @@
           this.$emit(`update:picked`, position);
         }
       },
+      initializePiece() {
+        this.color = this.getColorOf(this.pieceName);
+        this.movable = this.checkMovable(this.currentTurn);
+      },
     },
     computed: {
       grabCursorIfMovable() {
@@ -52,8 +56,10 @@
       }
     },
     created() {
-      this.color = this.getColorOf(this.pieceName);
-      this.movable = this.checkMovable(this.currentTurn);
+      this.initializePiece();
+    },
+    updated() {
+      this.initializePiece();
     },
   }
 </script>
