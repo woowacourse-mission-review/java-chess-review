@@ -9,6 +9,7 @@ public class Rook extends AbstractChessPiece {
 
     private static final List<Direction> DIRECTIONS = Arrays.asList(Direction.N, Direction.E, Direction.S, Direction.W);
     private static final String SIGN = "R";
+    private static final double SCORE = 5;
 
     @Override
     public boolean canMoveSeveralPositions() {
@@ -18,6 +19,11 @@ public class Rook extends AbstractChessPiece {
     @Override
     public String getSign() {
         return SIGN;
+    }
+
+    @Override
+    public double getScore() {
+        return SCORE;
     }
 
     @Override

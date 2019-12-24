@@ -60,4 +60,8 @@ public enum ChessPosition {
     public boolean isInitialBlackPawnPosition() {
         return LINE_OF_BLACK_PAWN.equals(String.valueOf(position.charAt(INDEX_OF_HEIGHT_POSITION)));
     }
+
+    public String getWidthPosition() {
+        return String.valueOf(position.charAt(INDEX_OF_WIDTH_POSITION));
+    }
 }

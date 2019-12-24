@@ -1,6 +1,7 @@
 package coursereview.springchess.domain.player;
 
 import coursereview.springchess.domain.chesspiece.ChessPiece;
+import coursereview.springchess.domain.chesspiece.pawn.AbstractPawn;
 import coursereview.springchess.domain.exception.CannotMovablePositionException;
 import coursereview.springchess.domain.exception.ChessPieceNotFoundOnSourceException;
 import coursereview.springchess.domain.position.ChessPosition;
@@ -8,7 +9,9 @@ import coursereview.springchess.domain.position.ChessPositions;
 import coursereview.springchess.domain.position.MovablePositions;
 
 import java.util.EnumMap;
+import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 public class ChessPlayer {
 
@@ -68,5 +71,44 @@ public class ChessPlayer {
 
     public Map<ChessPosition, ChessPiece> getPieces() {
         return pieces;
+    }
+
+    public double calculateScore() {
+        double totalScore = calculateTotalScore();
+
+        Map<String, Integer> pawnCountsByWidthPositions = countPawnsByWidthPositions();
+        int size = countSameWidthPositionPawns(pawnCountsByWidthPositions);
+
+        return totalScore - size * AbstractPawn.getDeductionScore();
+    }
+
+    private double calculateTotalScore() {
+        return pieces.values().stream()
+                .map(ChessPiece::getScore)
+                .reduce(Double::sum)
+                .orElse(0.0);
+    }
+
+    private Map<String, Integer> countPawnsByWidthPositions() {
+        Map<String, Integer> pawnCountsByWidthPositions = new HashMap<>();
+        pieces.entrySet().stream()
+                .filter(entry -> entry.getValue().isPawn())
+                .map(entry -> entry.getKey().getWidthPosition())
+                .forEach(widthPosition -> increaseCount(pawnCountsByWidthPositions, widthPosition));
+        return pawnCountsByWidthPositions;
+    }
+
+    private void increaseCount(final Map<String, Integer> widthPositionCounts, final String widthPosition) {
+        Integer count = widthPositionCounts.get(widthPosition);
+
+        count = Objects.isNull(count) ? 1 : count + 1;
+        widthPositionCounts.put(widthPosition, count);
+    }
+
+    private int countSameWidthPositionPawns(final Map<String, Integer> pawnCountsByWidthPositions) {
+        return pawnCountsByWidthPositions.values().stream()
+                .filter(count -> count > 1)
+                .reduce(Integer::sum)
+                .orElse(0);
     }
 }

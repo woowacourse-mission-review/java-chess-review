@@ -9,5 +9,9 @@ public interface ChessPiece {
 
     boolean canMoveSeveralPositions();
 
+    boolean isPawn();
+
     String getSign();
+
+    double getScore();
 }

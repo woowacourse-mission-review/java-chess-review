@@ -31,6 +31,14 @@ public class ChessGame {
         toggleTurn();
     }
 
+    public double getScoreOfWhitePlayer() {
+        return whitePlayer.calculateScore();
+    }
+
+    public double getScoreOfBlackPlayer() {
+        return blackPlayer.calculateScore();
+    }
+
     private ChessPlayer findCurrentTurnPlayer() {
         return isWhiteTurn ? whitePlayer : blackPlayer;
     }

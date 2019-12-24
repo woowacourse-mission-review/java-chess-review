@@ -11,6 +11,7 @@ public class Knight extends AbstractChessPiece {
             = Arrays.asList(Direction.NNE, Direction.EEN, Direction.EES, Direction.SSE
             , Direction.SSW, Direction.WWS, Direction.WWN, Direction.NNW);
     private static final String SIGN = "N";
+    private static final double SCORE = 2.5;
 
     @Override
     public boolean canMoveSeveralPositions() {
@@ -20,6 +21,11 @@ public class Knight extends AbstractChessPiece {
     @Override
     public String getSign() {
         return SIGN;
+    }
+
+    @Override
+    public double getScore() {
+        return SCORE;
     }
 
     @Override

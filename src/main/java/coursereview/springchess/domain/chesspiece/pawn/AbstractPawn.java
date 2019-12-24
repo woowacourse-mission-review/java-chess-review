@@ -14,6 +14,8 @@ import java.util.Optional;
 public abstract class AbstractPawn extends AbstractChessPiece {
 
     private static final String SIGN = "P";
+    private static final double SCORE = 1;
+    private static final double DEDUCTION_SCORE = 0.5;
 
     @Override
     public ChessPositions findMovablePositions(final ChessPosition source, final ChessGamePlayers chessGamePlayers) {
@@ -68,7 +70,21 @@ public abstract class AbstractPawn extends AbstractChessPiece {
     }
 
     @Override
+    public boolean isPawn() {
+        return true;
+    }
+
+    @Override
     public String getSign() {
         return SIGN;
+    }
+
+    @Override
+    public double getScore() {
+        return SCORE;
+    }
+
+    public static double getDeductionScore() {
+        return DEDUCTION_SCORE;
     }
 }

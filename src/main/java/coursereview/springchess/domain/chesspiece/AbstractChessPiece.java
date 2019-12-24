@@ -59,4 +59,9 @@ public abstract class AbstractChessPiece implements ChessPiece {
     }
 
     protected abstract List<Direction> getDirections();
+
+    @Override
+    public boolean isPawn() {
+        return false;
+    }
 }
